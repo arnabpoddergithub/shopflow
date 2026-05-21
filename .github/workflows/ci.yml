@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-order-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,16 +30,70 @@ jobs:
       - name: Notify on failure
         if: failure()
         run: |
-          echo "Pipeline failed!"
+          echo "order-service tests failed!"
           echo "Commit: ${{ github.sha }}"
-          echo "Author: ${{ github.actor }}"
 
-  build:
-    needs: test
+  test-inventory-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          cd services/inventory-service
+          npm install
+
+      - name: Run tests
+        run: |
+          cd services/inventory-service
+          npm test
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "inventory-service tests failed!"
+          echo "Commit: ${{ github.sha }}"
+
+  test-notification-service:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+
+      - name: Run tests
+        run: |
+          cd services/notification-service
+          go test ./...
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "notification-service tests failed!"
+          echo "Commit: ${{ github.sha }}"
+
+  build:
+    needs: [test-order-service, test-inventory-service, test-notification-service]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build order-service
         run: |
           docker build -t order-service:${{ github.sha }} ./services/order-service
+
+      - name: Build inventory-service
+        run: |
+          docker build -t inventory-service:${{ github.sha }} ./services/inventory-service
+
+      - name: Build notification-service
+        run: |
+          docker build -t notification-service:${{ github.sha }} ./services/notification-service
