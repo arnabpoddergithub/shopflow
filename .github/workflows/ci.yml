@@ -27,6 +27,63 @@ jobs:
           cd services/order-service
           pytest test_app.py -v
 
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Pipeline failed! Tests did not pass."
+          echo "Commit: ${{ github.sha }}"
+          echo "Author: ${{ github.actor }}"
+          echo "Check logs: ${{ github.server_url }}/${{ github.repository }}/actions"
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t order-service:${{ github.sha }} \
+          ./services/order-service
+EOFcd ~/shopflow/.github/workflows
+cat > ci.yml << 'EOF'
+name: ShopFlow CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install flask werkzeug pytest
+          pip install --upgrade flask werkzeug
+
+      - name: Run tests
+        run: |
+          cd services/order-service
+          pytest test_app.py -v
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "Pipeline failed! Tests did not pass."
+          echo "Commit: ${{ github.sha }}"
+          echo "Author: ${{ github.actor }}"
+          echo "Check logs: ${{ github.server_url }}/${{ github.repository }}/actions"
+
   build:
     needs: test
     runs-on: ubuntu-latest
