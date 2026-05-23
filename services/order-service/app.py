@@ -65,3 +65,4 @@ if __name__ == '__main__':
 @app.route('/version', methods=['GET'])
 def version():
     return jsonify({"version": "2.0", "service": "order-service"})
+# ShopFlow v2.0
