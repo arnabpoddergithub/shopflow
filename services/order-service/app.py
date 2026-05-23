@@ -3,10 +3,8 @@ from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_
 import time
 
 app = Flask(__name__)
-
 orders = []
 
-# Prometheus metrics
 REQUEST_COUNT = Counter(
     'order_service_requests_total',
     'Total request count',
@@ -58,11 +56,9 @@ def create_order():
 def metrics():
     return generate_latest(), 200, {'Content-Type': CONTENT_TYPE_LATEST}
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
-
 @app.route('/version', methods=['GET'])
 def version():
     return jsonify({"version": "2.0", "service": "order-service"})
-# ShopFlow v2.0
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
