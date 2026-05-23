@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: shopflow-alerts
+  namespace: monitoring
+spec:
+  route:
+    receiver: email-alerts
+    groupBy: ['alertname']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+  receivers:
+  - name: email-alerts
+    emailConfigs:
+    - to: 'arnab.podder@ebiw.com'
+      from: 'shopflow-alerts@gmail.com'
+      smarthost: 'smtp.gmail.com:587'
+      authUsername: 'arnab.podder@ebiw.com'
+      authPassword:
+        secret:
+          name: email-secret
+          key: password
