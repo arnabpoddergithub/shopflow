@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -27,16 +29,12 @@ jobs:
           cd services/order-service
           pytest test_app.py -v
 
-      - name: Notify on failure
-        if: failure()
-        run: |
-          echo "order-service tests failed!"
-          echo "Commit: ${{ github.sha }}"
-
   test-inventory-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -53,16 +51,12 @@ jobs:
           cd services/inventory-service
           npm test
 
-      - name: Notify on failure
-        if: failure()
-        run: |
-          echo "inventory-service tests failed!"
-          echo "Commit: ${{ github.sha }}"
-
   test-notification-service:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -74,17 +68,13 @@ jobs:
           cd services/notification-service
           go test ./...
 
-      - name: Notify on failure
-        if: failure()
-        run: |
-          echo "notification-service tests failed!"
-          echo "Commit: ${{ github.sha }}"
-
   build:
     needs: [test-order-service, test-inventory-service, test-notification-service]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build order-service
         run: |
