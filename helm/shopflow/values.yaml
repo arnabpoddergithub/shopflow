@@ -1,0 +1,17 @@
+orderService:
+  image: order-service
+  tag: v1
+  port: 5000
+  replicas: 1
+
+inventoryService:
+  image: inventory-service
+  tag: v1
+  port: 3000
+  replicas: 1
+
+notificationService:
+  image: notification-service
+  tag: v1
+  port: 8080
+  replicas: 1

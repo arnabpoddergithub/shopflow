@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+spec:
+  replicas: {{ .Values.orderService.replicas }}
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+      - name: order-service
+        image: "{{ .Values.orderService.image }}:{{ .Values.orderService.tag }}"
+        ports:
+        - containerPort: {{ .Values.orderService.port }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.orderService.port }}
+          initialDelaySeconds: 10
+          periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+spec:
+  replicas: {{ .Values.inventoryService.replicas }}
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+      - name: inventory-service
+        image: "{{ .Values.inventoryService.image }}:{{ .Values.inventoryService.tag }}"
+        ports:
+        - containerPort: {{ .Values.inventoryService.port }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.inventoryService.port }}
+          initialDelaySeconds: 10
+          periodSeconds: 5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service
+spec:
+  replicas: {{ .Values.notificationService.replicas }}
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+      - name: notification-service
+        image: "{{ .Values.notificationService.image }}:{{ .Values.notificationService.tag }}"
+        ports:
+        - containerPort: {{ .Values.notificationService.port }}
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.notificationService.port }}
+          initialDelaySeconds: 10
+          periodSeconds: 5
