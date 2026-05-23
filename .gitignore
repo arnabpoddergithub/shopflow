@@ -9,3 +9,10 @@ minikube
 kubectl
 *.pem
 *.key
+**/.terraform/
+*.zip
+aws/
+terraform-provider*
+.terraform.lock.hcl
+infrastructure/terraform/aws/awscliv2.zip
+infrastructure/terraform/aws/.terraform/
