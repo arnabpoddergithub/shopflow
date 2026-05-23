@@ -2,3 +2,10 @@ kubectl
 minikube-linux-amd64
 argocd-linux-amd64
 argocd-linux-amd64
+argocd-linux-amd64
+argocd
+minikube-linux-amd64
+minikube
+kubectl
+*.pem
+*.key
