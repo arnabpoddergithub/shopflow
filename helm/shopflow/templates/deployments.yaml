@@ -12,6 +12,8 @@ spec:
       labels:
         app: order-service
     spec:
+      imagePullSecrets:
+      - name: ecr-secret
       containers:
       - name: order-service
         image: "{{ .Values.orderService.image }}:{{ .Values.orderService.tag }}"
@@ -38,6 +40,8 @@ spec:
       labels:
         app: inventory-service
     spec:
+      imagePullSecrets:
+      - name: ecr-secret
       containers:
       - name: inventory-service
         image: "{{ .Values.inventoryService.image }}:{{ .Values.inventoryService.tag }}"
@@ -64,6 +68,8 @@ spec:
       labels:
         app: notification-service
     spec:
+      imagePullSecrets:
+      - name: ecr-secret
       containers:
       - name: notification-service
         image: "{{ .Values.notificationService.image }}:{{ .Values.notificationService.tag }}"
