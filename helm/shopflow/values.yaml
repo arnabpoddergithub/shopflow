@@ -1,17 +1,17 @@
 orderService:
   image: order-service
-  tag: v2
+  tag: cebaaacc93865ac70163b78a9f7df8824fcb4ac3
   port: 5000
   replicas: 1
 
 inventoryService:
   image: inventory-service
-  tag: v1
+  tag: cebaaacc93865ac70163b78a9f7df8824fcb4ac3
   port: 3000
   replicas: 1
 
 notificationService:
   image: notification-service
-  tag: v1
+  tag: cebaaacc93865ac70163b78a9f7df8824fcb4ac3
   port: 8080
   replicas: 1
