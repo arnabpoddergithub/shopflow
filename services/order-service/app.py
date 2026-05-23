@@ -60,3 +60,8 @@ def metrics():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
+
+@app.route('/version', methods=['GET'])
+def version():
+    return jsonify({"version": "2.0", "service": "order-service"})
