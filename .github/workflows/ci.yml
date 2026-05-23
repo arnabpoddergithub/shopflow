@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install flask werkzeug pytest
+          pip install flask werkzeug pytest prometheus-client
           pip install --upgrade flask werkzeug
 
       - name: Run tests
