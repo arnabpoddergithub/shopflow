@@ -1,21 +1,45 @@
-# ShopFlow
+# ShopFlow — Production-Grade DevOps Platform
 
-Production-grade DevOps platform for a 3-microservice e-commerce application.
+End-to-end DevOps platform for a 3-microservice e-commerce application. Code commit to production with zero manual steps, full observability, and automatic rollback.
 
-## Architecture
-- **order-service** — Python/Flask
-- **inventory-service** — Node.js
-- **notification-service** — Go
+## Microservices
+
+| Service | Language | Port |
+|---|---|---|
+| order-service | Python/Flask | 5000 |
+| inventory-service | Node.js | 3000 |
+| notification-service | Go | 8080 |
 
 ## Tech Stack
+
 | Layer | Tools |
 |---|---|
 | CI/CD | GitHub Actions |
-| GitOps | ArgoCD + Helm |
-| Infra | Terraform + OCI |
-| Kubernetes | OKE + KEDA + Argo Rollouts |
+| Container Registry | Amazon ECR |
+| GitOps | ArgoCD |
+| Kubernetes | Minikube / EKS |
+| Package Manager | Helm |
+| Infrastructure | Terraform |
+| Cloud | AWS (eu-north-1) |
 | Secrets | HashiCorp Vault |
-| Observability | Prometheus + Grafana + Loki + Jaeger |
+| Metrics | Prometheus + Grafana |
+| Alerting | Alertmanager |
 
-## Goal
-Code commit to production with zero manual steps, full observability, and automatic rollback.
+## CI/CD Flow
+
+Developer pushes code → GitHub Actions tests → Docker image built → Pushed to ECR → ArgoCD deploys to Kubernetes → Zero manual steps
+
+## Key Features
+
+- GitOps — Git is single source of truth
+- Zero downtime rolling deployments
+- Full observability — metrics, logs, alerts
+- HashiCorp Vault — zero hardcoded credentials
+- Terraform — all AWS infra as code
+- Prometheus metrics on all 3 services
+
+## Quick Start
+
+git clone https://github.com/podder-arnab/shopflow.git
+helm install shopflow ./helm/shopflow
+kubectl get pods
