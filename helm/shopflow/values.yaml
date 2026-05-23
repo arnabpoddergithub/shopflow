@@ -1,6 +1,6 @@
 orderService:
   image: order-service
-  tag: v1
+  tag: v2
   port: 5000
   replicas: 1
 
