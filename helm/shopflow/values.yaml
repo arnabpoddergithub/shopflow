@@ -1,17 +1,17 @@
 orderService:
   image: 160631388404.dkr.ecr.eu-north-1.amazonaws.com/shopflow/order-service
-  tag: f9c724de61f6005aa659e422638b62fc26076208
+  tag: 3fb4493446c1f0354565c02597e2385d1e60fab5
   port: 5000
   replicas: 1
 
 inventoryService:
   image: 160631388404.dkr.ecr.eu-north-1.amazonaws.com/shopflow/inventory-service
-  tag: f9c724de61f6005aa659e422638b62fc26076208
+  tag: 3fb4493446c1f0354565c02597e2385d1e60fab5
   port: 3000
   replicas: 1
 
 notificationService:
   image: 160631388404.dkr.ecr.eu-north-1.amazonaws.com/shopflow/notification-service
-  tag: f9c724de61f6005aa659e422638b62fc26076208
+  tag: 3fb4493446c1f0354565c02597e2385d1e60fab5
   port: 8080
   replicas: 1
