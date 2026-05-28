@@ -43,3 +43,4 @@ Developer pushes code → GitHub Actions tests → Docker image built → Pushed
 git clone https://github.com/podder-arnab/shopflow.git
 helm install shopflow ./helm/shopflow
 kubectl get pods
+# updated
